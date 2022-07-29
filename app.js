@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+require('dotenv').config();
 
 const { isAuthorized } = require('./middlewares/auth');
 const routerUsers = require('./routes/users');

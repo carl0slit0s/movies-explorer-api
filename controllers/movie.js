@@ -1,4 +1,5 @@
 const Movie = require('../models/movie');
+const { noRightsError } = require('../middlewares/errors');
 
 class NotFoundError extends Error {
   constructor(message) {
@@ -24,12 +25,16 @@ const addMovie = (req, res, next) => {
 
 const deleteMovie = (req, res, next) => {
   const { movieId } = req.body;
+
   Movie.findById(movieId)
     .orFail(() => {
       throw new NotFoundError('NotFound');
     })
-    .then(() => {
-      Movie.findByIdAndRemove(movieId);
+    .then((movie) => {
+      if (req.user.id !== movie.owner._id.toString()) {
+        return next(noRightsError());
+      }
+      return Movie.findByIdAndRemove(movieId);
     })
     .then(() => res.send({ message: 'фильм удалён' }))
     .catch(next);

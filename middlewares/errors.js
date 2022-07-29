@@ -10,6 +10,12 @@ const validError = () => {
   return error;
 };
 
+const noRightsError = () => {
+  const error = new Error('нет прав доступа');
+  error.statusCode = 403;
+  return error;
+};
+
 const alreadyExistsError = () => {
   const error = new Error('Почта занята');
   error.statusCode = 409;
@@ -27,4 +33,5 @@ module.exports = {
   validError,
   alreadyExistsError,
   notFoundPageErorr,
+  noRightsError,
 };

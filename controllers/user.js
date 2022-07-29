@@ -9,8 +9,7 @@ class NotFoundError extends Error {
 }
 
 const getUserData = (req, res, next) => {
-  // User.findById(req.user.id)
-  User.findById('62e164bc07c2b617932de965')
+  User.findById(req.user.id)
     .orFail(() => {
       throw new NotFoundError('NotFound');
     })
