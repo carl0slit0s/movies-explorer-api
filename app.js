@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const moviesdb = require('mongoose');
 require('dotenv').config();
 const { errors } = require('celebrate');
-const cors = require('cors');
+// const cors = require('cors');
 // const helmet = require('helmet');
 
 const { isAuthorized } = require('./middlewares/auth');
@@ -18,22 +18,22 @@ const app = express();
 
 moviesdb.connect('mongodb://localhost:27017/bitfilmsdb');
 
-const allowedCors = [
-  'http://localhost:3000',
-  'http://api.diplomalit0s.nomoredomains.xyz/',
-  'https://api.diplomalit0s.nomoredomains.xyz/',
-  'api.diplomalit0s.nomoredomains.xyz/',
-];
+// const allowedCors = [
+//   'http://localhost:3000',
+//   'http://api.diplomalit0s.nomoredomains.xyz/',
+//   'https://api.diplomalit0s.nomoredomains.xyz/',
+//   'api.diplomalit0s.nomoredomains.xyz/',
+// ];
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(requestLogger);
 
-app.use(cors({
-  origin: allowedCors,
-  credentials: true,
-}));
+// app.use(cors({
+//   origin: allowedCors,
+//   credentials: true,
+// }));
 
 app.use('/', routerAuth);
 
