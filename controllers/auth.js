@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-const { authErorr, validError, alreadyExistsError } = require('../middlewares/errors');
+const { authError, validError, alreadyExistsError } = require('../middlewares/errors');
 
 const login = (req, res, next) => {
   const { email, password } = req.body;
@@ -10,13 +10,13 @@ const login = (req, res, next) => {
       .select('+password')
       .then((user) => {
         if (!user) {
-          authErorr();
+          authError();
         }
         return Promise.all([user, bcrypt.compare(password, user.password)]);
       })
       .then(([user, isPasswordCorrect]) => {
         if (!isPasswordCorrect) {
-          authErorr();
+          authError();
         }
         const token = jwt.sign({ id: user._id }, 'very_secret', { expiresIn: '7d' });
         res.send(token);

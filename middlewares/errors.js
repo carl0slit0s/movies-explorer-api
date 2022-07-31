@@ -22,6 +22,12 @@ const alreadyExistsError = () => {
   return error;
 };
 
+const alreadyExistsIdError = () => {
+  const error = new Error('Id занят');
+  error.statusCode = 409;
+  return error;
+};
+
 const notFoundPageErorr = () => {
   const error = new Error('страница не найдена');
   error.statusCode = 404;
@@ -34,4 +40,5 @@ module.exports = {
   alreadyExistsError,
   notFoundPageErorr,
   noRightsError,
+  alreadyExistsIdError,
 };

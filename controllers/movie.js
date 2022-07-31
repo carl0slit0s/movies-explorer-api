@@ -1,34 +1,37 @@
 const Movie = require('../models/movie');
-const { noRightsError } = require('../middlewares/errors');
-
-class NotFoundError extends Error {
-  constructor(message) {
-    super(message);
-    this.name = 'NotFoundError';
-    this.statusCode = 404;
-  }
-}
+const { noRightsError, notFoundPageErorr } = require('../middlewares/errors');
+const { alreadyExistsIdError, validError } = require('../middlewares/errors');
 
 const getMovies = (req, res, next) => {
   Movie.find({})
     .then((movies) => res.send({ movies }))
-    .cath(next);
+    .catch(next);
 };
 
 const addMovie = (req, res, next) => {
   const movieData = req.body;
-
-  Movie.create(movieData)
-    .then(() => res.status(201).send(movieData))
-    .catch(next);
+  const owner = req.user.id;
+  Movie.create({ ...movieData, owner })
+    .then((movie) => {
+      res.status(201).send(movie);
+    })
+    .catch((err) => {
+      if (err.code === 11000) {
+        return next(alreadyExistsIdError());
+      }
+      if (err.name === 'ValidationError') {
+        return next(validError());
+      }
+      return next(err);
+    });
 };
 
 const deleteMovie = (req, res, next) => {
-  const { movieId } = req.body;
+  const { movieId } = req.params;
 
   Movie.findById(movieId)
     .orFail(() => {
-      throw new NotFoundError('NotFound');
+      notFoundPageErorr();
     })
     .then((movie) => {
       if (req.user.id !== movie.owner._id.toString()) {

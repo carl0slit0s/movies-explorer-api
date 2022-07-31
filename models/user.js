@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+const moviesdb = require('mongoose');
 const validator = require('validator');
 
-const userSchema = new mongoose.Schema({
+const userSchema = new moviesdb.Schema({
   email: {
     type: String,
     required: true,
@@ -25,4 +25,4 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('user', userSchema);
+module.exports = moviesdb.model('user', userSchema);

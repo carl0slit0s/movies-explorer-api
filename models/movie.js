@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
+const moviesdb = require('mongoose');
+const validator = require('validator');
 
-const movieSchema = new mongoose.Schema({
+const movieSchema = new moviesdb.Schema({
   country: {
     type: String,
     required: true,
@@ -20,43 +21,53 @@ const movieSchema = new mongoose.Schema({
   image: {
     type: String,
     required: true,
-    valodate: (val) => /(http|https):\/\/([\w.]+\/?)\S*/.test(val),
-    message: () => 'нреккоректнгая ссылка',
+    validate: {
+      validator: (val) => validator.isURL(val),
+      message: 'не валидная ссылка',
+    },
   },
   trailerLink: {
     type: String,
     required: true,
-    validator: (val) => /(http|https):\/\/([\w.]+\/?)\S*/.test(val),
-    message: () => 'нреккоректнгая ссылка',
+    validate: {
+      validator: (val) => validator.isURL(val),
+      message: 'не валидная ссылка',
+    },
   },
   thumbnail: {
     type: String,
     required: true,
-    validator: (val) => /(http|https):\/\/([\w.]+\/?)\S*/.test(val),
-    message: () => 'нреккоректнгая ссылка',
+    validate: {
+      validator: (val) => validator.isURL(val),
+      message: 'не валидная ссылка',
+    },
   },
   owner: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: moviesdb.Schema.Types.ObjectId,
     ref: 'user',
     required: true,
   },
   movieId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'movie',
+    type: Number,
     required: true,
+    unique: true,
   },
   nameRU: {
     type: String,
     required: true,
-    validator: (val) => /[\w\s]/g.test(val),
-    message: () => 'нреккоректнгая ссылка',
+    validate: {
+      validator: (val) => /[\w\s]/g.test(val),
+      message: 'не валидная ссылка',
+    },
   },
   nameEN: {
     type: String,
     required: true,
-    validator: (val) => /[а-яА-Я\d\s]/g.test(val),
-    message: () => 'нреккоректнгая ссылка',
+    validate: {
+      validator: (val) => /[а-яА-Я\d\s]/g.test(val),
+      message: 'не валидная ссылка',
+    },
   },
 });
 
-module.exports = mongoose.model('movie', movieSchema);
+module.exports = moviesdb.model('movie', movieSchema);
