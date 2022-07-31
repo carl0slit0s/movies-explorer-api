@@ -4,7 +4,7 @@ const moviesdb = require('mongoose');
 require('dotenv').config();
 const { errors } = require('celebrate');
 const cors = require('cors');
-const helmet = require('helmet');
+// const helmet = require('helmet');
 
 const { isAuthorized } = require('./middlewares/auth');
 const routers = require('./routes/index');
@@ -14,7 +14,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT = 3000 } = process.env;
 const app = express();
-app.use(helmet());
+// app.use(helmet());
 
 moviesdb.connect('mongodb://localhost:27017/bitfilmsdb');
 
