@@ -8,7 +8,7 @@ const helmet = require('helmet');
 const { limiter } = require('./middlewares/rateLimit');
 require('dotenv').config();
 
-const { NODE_ENV, MONGO_DB_ENV } = process.env;
+const { NODE_ENV, MONGO_DB_ENV, PORT = 3000 } = process.env;
 
 const { MONGO_DB } = require('./config/config');
 const { ALLOWED_CORS, OTHER_ERR_CODE, OTHER_ERR_MESSAGE } = require('./config/constants');
@@ -17,7 +17,6 @@ const routers = require('./routes/index');
 const { notFoundPageErorr } = require('./middlewares/errors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const { PORT = 3000 } = process.env;
 const app = express();
 app.use(helmet());
 
