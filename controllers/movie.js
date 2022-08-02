@@ -28,10 +28,9 @@ const addMovie = (req, res, next) => {
 
 const deleteMovie = (req, res, next) => {
   const { movieId } = req.params;
-
   Movie.findById(movieId)
     .orFail(() => {
-      notFoundPageErorr();
+      throw notFoundPageErorr();
     })
     .then((movie) => {
       if (req.user.id !== movie.owner._id.toString()) {
@@ -40,7 +39,7 @@ const deleteMovie = (req, res, next) => {
       return Movie.findByIdAndRemove(movieId);
     })
     .then(() => res.send({ message: 'фильм удалён' }))
-    .catch(next);
+    .catch(() => next());
 };
 
 module.exports = { getMovies, deleteMovie, addMovie };

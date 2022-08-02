@@ -1,17 +1,22 @@
 const router = require('express').Router();
 
+const { isAuthorized } = require('../middlewares/auth');
 const {
   movieCreatValidation,
   movieDeleteValidation,
   userUpdateValidatyion,
+  userCreatValidation,
+  userInValidatyion,
 } = require('../middlewares/validate');
 
 const { getMovies, deleteMovie, addMovie } = require('../controllers/movie');
+const { login, register } = require('../controllers/auth');
+const { getUserData, updateUserData } = require('../controllers/user');
 
-const {
-  getUserData,
-  updateUserData,
-} = require('../controllers/user');
+router.post('/signup', userCreatValidation, register);
+router.post('/signin', userInValidatyion, login);
+
+router.use(isAuthorized);
 
 router.get('/movies', getMovies);
 

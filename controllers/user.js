@@ -1,5 +1,5 @@
 const User = require('../models/user');
-const { notFoundPageErorr } = require('../middlewares/errors');
+const { notFoundPageErorr, alreadyExistsError, validError } = require('../middlewares/errors');
 
 // class NotFoundError extends Error {
 //   constructor(message) {
@@ -29,7 +29,15 @@ const updateUserData = (req, res, next) => {
       notFoundPageErorr();
     })
     .then((user) => res.send({ name: user.name, email: user.email }))
-    .catch(next);
+    .catch((err) => {
+      if (err.code === 11000) {
+        return next(alreadyExistsError());
+      }
+      if (err.name === 'ValidationError') {
+        return next(validError());
+      }
+      return next(err);
+    });
 };
 
 module.exports = { getUserData, updateUserData };

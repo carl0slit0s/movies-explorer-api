@@ -10,6 +10,10 @@ const movieSchema = new moviesdb.Schema({
     type: String,
     required: true,
   },
+  duration: {
+    type: Number,
+    required: true,
+  },
   year: {
     type: String,
     required: true,
@@ -56,16 +60,16 @@ const movieSchema = new moviesdb.Schema({
     type: String,
     required: true,
     validate: {
-      validator: (val) => /[\w\s]/g.test(val),
-      message: 'не валидная ссылка',
+      validator: (val) => /[а-яА-Я\d\s]/g.test(val),
+      message: 'не валидное поле',
     },
   },
   nameEN: {
     type: String,
     required: true,
     validate: {
-      validator: (val) => /[а-яА-Я\d\s]/g.test(val),
-      message: 'не валидная ссылка',
+      validator: (val) => /[\w\s]/g.test(val),
+      message: 'не валидное поле',
     },
   },
 });

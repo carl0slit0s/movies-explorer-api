@@ -5,10 +5,15 @@ require('dotenv').config();
 const { errors } = require('celebrate');
 const cors = require('cors');
 const helmet = require('helmet');
+const { limiter } = require('./middlewares/rateLimit');
+require('dotenv').config();
 
-const { isAuthorized } = require('./middlewares/auth');
+const { NODE_ENV, MONGO_DB_ENV } = process.env;
+
+const { MONGO_DB } = require('./config/config');
+const { ALLOWED_CORS, OTHER_ERR_CODE, OTHER_ERR_MESSAGE } = require('./config/constants');
+
 const routers = require('./routes/index');
-const routerAuth = require('./routes/auth');
 const { notFoundPageErorr } = require('./middlewares/errors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
@@ -16,28 +21,20 @@ const { PORT = 3000 } = process.env;
 const app = express();
 app.use(helmet());
 
-moviesdb.connect('mongodb://localhost:27017/bitfilmsdb');
-
-const allowedCors = [
-  'http://localhost:3000',
-  'http://api.diplomalit0s.nomoredomains.xyz/',
-  'https://api.diplomalit0s.nomoredomains.xyz/',
-  'api.diplomalit0s.nomoredomains.xyz/',
-];
+moviesdb.connect(NODE_ENV === 'production' ? MONGO_DB_ENV : MONGO_DB);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(requestLogger);
 
+app.use(limiter);
+
 app.use(cors({
-  origin: allowedCors,
+  origin: ALLOWED_CORS,
   credentials: true,
 }));
 
-app.use('/', routerAuth);
-
-app.use(isAuthorized);
 app.use('/', routers);
 
 app.use((req, res, next) => {
@@ -49,8 +46,8 @@ app.use(errors());
 
 app.use((err, req, res, next) => {
   const { statusCode, message } = err;
-  res.status(statusCode).send(statusCode === 500
-    ? { message: 'Что-то пошло не так' }
+  res.status(statusCode).send(statusCode === OTHER_ERR_CODE
+    ? { message: OTHER_ERR_MESSAGE }
     : { message });
   next();
 });

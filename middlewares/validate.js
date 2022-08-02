@@ -27,6 +27,7 @@ const movieCreatValidation = celebrate({
   body: Joi.object().keys({
     country: Joi.string().required().min(2),
     director: Joi.string().required().min(2),
+    duration: Joi.number().required(),
     year: Joi.string().required().length(4),
     description: Joi.string().required().min(2),
     image: Joi.string().required().custom((value, helpers) => {
@@ -65,7 +66,7 @@ const movieCreatValidation = celebrate({
 
 const movieDeleteValidation = celebrate({
   params: Joi.object().keys({
-    movieId: Joi.string(),
+    movieId: Joi.string().hex().length(24),
   }),
 });
 
