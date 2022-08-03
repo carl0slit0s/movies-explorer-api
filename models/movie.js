@@ -5,10 +5,12 @@ const movieSchema = new moviesdb.Schema({
   country: {
     type: String,
     required: true,
+    minlength: 2,
   },
   director: {
     type: String,
     required: true,
+    minlength: 2,
   },
   duration: {
     type: Number,
@@ -17,6 +19,7 @@ const movieSchema = new moviesdb.Schema({
   year: {
     type: String,
     required: true,
+    length: 4,
   },
   description: {
     type: String,
