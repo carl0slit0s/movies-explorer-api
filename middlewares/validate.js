@@ -50,13 +50,13 @@ const movieCreatValidation = celebrate({
     }),
     movieId: Joi.number().required(),
     nameRU: Joi.string().required().custom((value, helpers) => {
-      if (/[\w\s]/g.test(value)) {
+      if (/[а-яА-Я\d\s]/g.test(value)) {
         return value;
       }
       return helpers.message('поле nameRU не корректно');
     }),
     nameEN: Joi.string().required().custom((value, helpers) => {
-      if (/[а-яА-Я\d\s]/g.test(value)) {
+      if (/[\w\s]/g.test(value)) {
         return value;
       }
       return helpers.message('поле nameEN не корректно');

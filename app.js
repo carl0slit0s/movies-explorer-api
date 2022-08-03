@@ -6,7 +6,6 @@ const { errors } = require('celebrate');
 const cors = require('cors');
 const helmet = require('helmet');
 const { limiter } = require('./middlewares/rateLimit');
-require('dotenv').config();
 
 const { NODE_ENV, MONGO_DB_ENV, PORT = 3000 } = process.env;
 
