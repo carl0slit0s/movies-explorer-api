@@ -62,18 +62,10 @@ const movieSchema = new moviesdb.Schema({
   nameRU: {
     type: String,
     required: true,
-    validate: {
-      validator: (val) => /[а-яА-Я\d\s]/g.test(val),
-      message: 'не валидное поле',
-    },
   },
   nameEN: {
     type: String,
     required: true,
-    validate: {
-      validator: (val) => /[\w\s]/g.test(val),
-      message: 'не валидное поле',
-    },
   },
 });
 

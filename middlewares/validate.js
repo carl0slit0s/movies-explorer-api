@@ -29,7 +29,7 @@ const movieCreatValidation = celebrate({
     director: Joi.string().required().min(2),
     duration: Joi.number().required(),
     year: Joi.string().required().length(4),
-    description: Joi.string().required().min(2),
+    description: Joi.string().required(),
     image: Joi.string().required().custom((value, helpers) => {
       if (validator.isURL(value)) {
         return value;
@@ -49,18 +49,8 @@ const movieCreatValidation = celebrate({
       return helpers.message('поле thumbnail не корректно');
     }),
     movieId: Joi.number().required(),
-    nameRU: Joi.string().required().custom((value, helpers) => {
-      if (/[а-яА-Я\d\s]/g.test(value)) {
-        return value;
-      }
-      return helpers.message('поле nameRU не корректно');
-    }),
-    nameEN: Joi.string().required().custom((value, helpers) => {
-      if (/[\w\s]/g.test(value)) {
-        return value;
-      }
-      return helpers.message('поле nameEN не корректно');
-    }),
+    nameRU: Joi.string().required(),
+    nameEN: Joi.string().required(),
   }),
 });
 
