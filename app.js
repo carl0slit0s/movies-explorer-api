@@ -20,14 +20,13 @@ app.use(helmet());
 
 moviesdb.connect(NODE_ENV === 'production' ? MONGO_DB_ENV : MONGO_DB);
 
+app.use(cors);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(requestLogger);
 
 app.use(limiter);
-
-app.use(cors);
 
 app.use('/', routers);
 
