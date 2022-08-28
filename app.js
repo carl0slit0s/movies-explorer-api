@@ -27,7 +27,7 @@ app.use(requestLogger);
 
 app.use(limiter);
 
-app.use(cors());
+app.use(cors);
 
 app.use('/', routers);
 
