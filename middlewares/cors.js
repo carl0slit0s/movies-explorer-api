@@ -1,6 +1,6 @@
 const allowedCors = [
-  'http://api.diplomalit0s.nomoredomains.xyz/signin',
-  'https://api.diplomalit0s.nomoredomains.xyz/signin',
+  'http://api.diplomalit0s.nomoredomains.xyz',
+  'https://api.diplomalit0s.nomoredomains.xyz',
   'http://localhost:3000',
   'localhost:3000',
 ];
