@@ -1,8 +1,10 @@
 const ALLOWED_CORS = [
   'http://localhost:3000',
-  'http://api.diplomalit0s.nomoredomains.xyz/',
-  'https://api.diplomalit0s.nomoredomains.xyz/',
-  'api.diplomalit0s.nomoredomains.xyz/',
+  'localhost:3000',
+  'http://api.diplomalit0s.nomoredomains.xyz',
+  'https://api.diplomalit0s.nomoredomains.xyz',
+  'http://api.diplomalit0s.nomoredomains.xyz',
+  'api.diplomalit0s.nomoredomains.xyz',
 ];
 
 const VALID_ERR_CODE = 400;

@@ -4,12 +4,13 @@ const moviesdb = require('mongoose');
 require('dotenv').config();
 const { errors } = require('celebrate');
 const helmet = require('helmet');
-const { cors } = require('./middlewares/cors');
+// const { cors } = require('./middlewares/cors');
+const cors = require('cors');
 const { limiter } = require('./middlewares/rateLimit');
 
 const { NODE_ENV, MONGO_DB_ENV, PORT = 3000 } = process.env;
 const { MONGO_DB } = require('./config/config');
-const { OTHER_ERR_CODE, OTHER_ERR_MESSAGE } = require('./config/constants');
+const { ALLOWED_CORS, OTHER_ERR_CODE, OTHER_ERR_MESSAGE } = require('./config/constants');
 
 const routers = require('./routes/index');
 const { notFoundPageErorr } = require('./middlewares/errors');
@@ -20,7 +21,11 @@ app.use(helmet());
 
 moviesdb.connect(NODE_ENV === 'production' ? MONGO_DB_ENV : MONGO_DB);
 
-app.use(cors);
+app.use(cors({
+  origin: ALLOWED_CORS,
+  credentials: true,
+}));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
