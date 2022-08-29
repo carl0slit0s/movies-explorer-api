@@ -4,7 +4,7 @@ const { alreadyExistsIdError, validError } = require('../middlewares/errors');
 
 const getMovies = (req, res, next) => {
   Movie.find({})
-    .then((movies) => res.send({ movies }))
+    .then((movies) => res.send(movies))
     .catch(next);
 };
 
