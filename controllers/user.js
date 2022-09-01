@@ -14,7 +14,7 @@ const getUserData = (req, res, next) => {
     .orFail(() => {
       notFoundPageErorr();
     })
-    .then((user) => res.send({ name: user.name, email: user.email }))
+    .then((user) => res.send({ name: user.name, email: user.email, id: user._id }))
     .catch(next);
 };
 
