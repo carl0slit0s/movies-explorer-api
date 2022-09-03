@@ -1,9 +1,9 @@
 const ALLOWED_CORS = [
   'http://localhost:3000',
   'localhost:3000',
-  'project-mesto72.nomoredomains.xyz',
-  'http://project-mesto72.nomoredomains.xyz',
-  'https://project-mesto72.nomoredomains.xyz',
+  'diplomalit0s.nomorepartiesxyz.ru',
+  'http://diplomalit0s.nomorepartiesxyz.ru',
+  'https://diplomalit0s.nomorepartiesxyz.ru',
   'http://api.diplomalit0s.nomoredomains.xyz',
   'https://api.diplomalit0s.nomoredomains.xyz',
   'http://api.diplomalit0s.nomoredomains.xyz',
