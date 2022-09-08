@@ -57,7 +57,6 @@ const movieSchema = new moviesdb.Schema({
   movieId: {
     type: Number,
     required: true,
-    unique: true,
   },
   nameRU: {
     type: String,
