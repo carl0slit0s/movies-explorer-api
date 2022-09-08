@@ -11,7 +11,6 @@ const getMovies = (req, res, next) => {
 const addMovie = (req, res, next) => {
   const movieData = req.body;
   const owner = req.user.id;
-  console.log({ ...movieData, owner });
   Movie.create({ ...movieData, owner })
     .then((movie) => {
       res.status(201).send(movie);
